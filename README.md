@@ -7,6 +7,7 @@
 4. `pip install -r requirements.txt`
 
 ## [Workshop 1](./Workshop1)
+Dynamic programming workshop. Implement `policy iteration` and `value iteration` to solve the Frozenlake environment.
 
 ## [Workshop 2](./Workshop2)
 
