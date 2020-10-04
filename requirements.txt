@@ -106,6 +106,7 @@ testpath==0.4.4
 torch==1.6.0
 torchvision==0.7.0
 tornado==6.0.4
+tqdm==4.50.0
 traitlets==5.0.4
 typing-extensions==3.7.4.3
 urllib3==1.25.10
