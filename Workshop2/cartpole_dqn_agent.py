@@ -50,7 +50,12 @@ class DQNAgent:
     ####################### TO-DO #######################
     # Replace None with your code
     def define_model(self, input_size):
-        self.model = None
+        self.model = nn.Sequential(
+            nn.Linear(input_size, None),
+            None,
+            nn.Linear(None, env.action_space.n),
+            nn.LogSoftmax(dim=1)
+        )
 
     def train_model(self, batch_size=64, n_epoch=5, lr=1e-3):
         X = torch.tensor([i[0] for i in self.training_data], dtype=torch.float)

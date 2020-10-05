@@ -15,3 +15,5 @@ TD and DQN workshop. Implement `Q-learning, SARSA and DQN` to solve the [CartPol
 and [MountainCar](https://gym.openai.com/envs/MountainCar-v0/) environments.
 
 ## [Workshop 3](./Workshop3)
+DRL on enterprise application workshop. Implement `DQN` to solve a
+price optimization problem.
