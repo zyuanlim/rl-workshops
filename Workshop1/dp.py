@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def one_step_lookahead(environment, state, V, discount_factor):
     """
     Helper function to calculate a state-value function.
@@ -21,7 +20,7 @@ def one_step_lookahead(environment, state, V, discount_factor):
     return action_values
 
 
-def policy_evaluation(policy, environment, V, discount_factor=1.0, theta=1e-9, max_iter=1e9):
+def policy_evaluation(policy, environment, V, discount_factor=1.0, theta=1e-9):
     """
     Evaluate a policy given a deterministic environment.
     :param policy: Matrix of a size nSxnA, each cell represents a probability of taking action a in state s.
@@ -29,7 +28,6 @@ def policy_evaluation(policy, environment, V, discount_factor=1.0, theta=1e-9, m
     :param V: The value-function represented as an array. Vector of length nS.
     :param discount_factor: MDP discount factor. Float in range from 0 to 1.
     :param theta: A threshold of a value function change.
-    :param max_iter: Maximum number of iteration to prevent infinite loops.
     :return: A vector of size nS, which represent a value function for each state.
     """
 
@@ -37,7 +35,7 @@ def policy_evaluation(policy, environment, V, discount_factor=1.0, theta=1e-9, m
     evaluation_iterations = 1
 
     # Repeat until value change is below the threshold
-    for i in range(int(max_iter)):
+    while True:
 
         # Initialize a change of value function as zero
         delta = 0
@@ -71,12 +69,11 @@ def policy_evaluation(policy, environment, V, discount_factor=1.0, theta=1e-9, m
             return V
 
 
-def policy_iteration(environment, discount_factor=1.0, max_iter=1e9):
+def policy_iteration(environment, discount_factor=1.0):
     """
     Policy iteration algorithm to solve MDP.
     :param environment: Initialized OpenAI gym environment object.
     :param discount_factor: MPD discount factor. Float in range from 0 to 1.
-    :param max_iter: Maximum number of iterations to prevent infinite loops.
     :return: tuple(policy, V), which consist of an optimal policy matrix and value function for each state.
     """
     # Start with a random policy
@@ -89,7 +86,7 @@ def policy_iteration(environment, discount_factor=1.0, max_iter=1e9):
     evaluated_policies = 1
 
     # Repeat until convergence or critical number of iterations reached
-    for i in range(int(max_iter)):
+    while True:
 
         stable_policy = True
 
@@ -104,17 +101,17 @@ def policy_iteration(environment, discount_factor=1.0, max_iter=1e9):
 
             # Look one step ahead and evaluate if current action is optimal
             # We will try every possible action in a current state
-            action_value = one_step_lookahead(environment, state, V, discount_factor)
+            action_values = one_step_lookahead(environment, state, V, discount_factor)
 
             # Select a better action
-            best_action = np.argmax(action_value)
+            best_action = np.argmax(action_values)
 
             # If action didn't change
             if current_action != best_action:
-                stable_policy = True
+                stable_policy = False
 
             # Greedy policy update
-            policy[state, best_action] = 1.0
+            policy[state] = np.eye(environment.nA)[best_action]
 
         evaluated_policies += 1
 
@@ -125,20 +122,21 @@ def policy_iteration(environment, discount_factor=1.0, max_iter=1e9):
 
 ####################### TO-DO #######################
 # Replace None with your code
-def value_iteration(environment, discount_factor=1.0, theta=1e-9, max_iterations=1e9):
+def value_iteration(environment, discount_factor=1.0, theta=1e-9):
     """
     Value Iteration algorithm to solve MDP.
     :param environment: Initialized OpenAI environment object.
     :param theta: Stopping threshold. If the value of all states changes less than theta in one iteration - we are done.
     :param discount_factor: MDP discount factor.
-    :param max_iterations: Maximum number of iterations that can be ever performed (to prevent infinite loops).
     :return: tuple (policy, V) which contains optimal policy and optimal value function.
     """
 
     # Initialize state-value function with zeros for each environment state
     V = np.zeros(environment.nS)
-
-    for i in range(int(max_iterations)):
+    
+    iteration = 0
+    
+    while True:
 
         # Early stopping condition
         delta = 0
@@ -158,9 +156,10 @@ def value_iteration(environment, discount_factor=1.0, theta=1e-9, max_iterations
             # Update the value function for current state
             V[state] = None
 
+        iteration += 1
         # Check if we can stop
         if delta < theta:
-            print(f'Value-iteration converged at iteration#{i}.')
+            print(f'Value-iteration converged at iteration #{iteration}.')
             break
 
     # Create a deterministic policy using the optimal value function
