@@ -1,4 +1,3 @@
-import gym
 import numpy as np
 import math
 from cartpole_base_agent import CartPoleAgent

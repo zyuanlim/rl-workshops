@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 
-class CartPoleAgent():
+class CartPoleAgent:
     def __init__(self, buckets=(1, 1, 6, 12), num_episodes=1000, min_lr=0.1, min_epsilon=0.1, discount=0.98, decay=25):
         self.buckets = buckets
         self.num_episodes = num_episodes
@@ -63,8 +63,8 @@ class CartPoleAgent():
                 current_state = new_state
         print('Finished training!')
 
-    def run(self):
-        self.epsilon = 0
+    def run(self, epsilon=0):
+        self.epsilon = epsilon
         env = gym.wrappers.Monitor(self.env, 'cartpole', force=True)
         t = 0
         done = False
@@ -78,8 +78,8 @@ class CartPoleAgent():
             current_state = new_state
         return t
 
-    def run_episodes(self, n_episodes=100):
-        self.epsilon = 0
+    def run_episodes(self, n_episodes=100, epsilon=0):
+        self.epsilon = epsilon
         total_reward = 0
         for episode in range(n_episodes):
             t = 0
@@ -99,7 +99,6 @@ class CartPoleAgent():
 if __name__ == "__main__":
     print("Running a naive agent which takes random action.")
     agent = CartPoleAgent()
-    agent.epsilon = 1.0
-    t = agent.run()
+    t = agent.run(epsilon=1.0)
     print("Time", t)
-    agent.run_episodes()
+    agent.run_episodes(epsilon=1.0)

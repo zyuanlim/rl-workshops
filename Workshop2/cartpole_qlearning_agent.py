@@ -3,6 +3,7 @@ import numpy as np
 import math
 from cartpole_base_agent import CartPoleAgent
 
+
 ####################### TO-DO #######################
 # Replace None with your code
 class CartPoleQAgent(CartPoleAgent):

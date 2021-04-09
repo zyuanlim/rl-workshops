@@ -22,15 +22,13 @@ class DQNAgent:
         accepted_scores = []
         for _ in range(n_games):
             observation = env.reset()
-            t = 0
             score = 0
             game_memory = []
             for i in range(200):
-                t = t + 1
                 action = random.randrange(0, env.action_space.n)
                 game_memory.append([observation, action])
-                observation, reward, done, info = env.step(action)
-                score = score + reward
+                observation, reward, done, _ = env.step(action)
+                score += reward
                 if done:
                     break
             if score >= score_requirements:
@@ -42,11 +40,6 @@ class DQNAgent:
         training_data_save = np.array(self.training_data)
         np.save('training_data.npy', training_data_save)
 
-        # some stats here, to further illustrate the neural network magic!
-        # print('Average accepted score:', mean(accepted_scores))
-        # print('Median score for accepted scores:', median(accepted_scores))
-        # print(Counter(accepted_scores))
-
     ####################### TO-DO #######################
     # Replace None with your code
     def define_model(self, input_size):
@@ -57,7 +50,7 @@ class DQNAgent:
             nn.LogSoftmax(dim=1)
         )
 
-    def train_model(self, batch_size=64, n_epoch=5, lr=1e-3):
+    def train_model(self, batch_size=64, n_epoch=5, lr=1e-3, verbose=False):
         X = torch.tensor([i[0] for i in self.training_data], dtype=torch.float)
         y = torch.tensor([i[1] for i in self.training_data], dtype=torch.long)
         dataset = TensorDataset(X, y)
@@ -75,8 +68,9 @@ class DQNAgent:
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
-            # else:
-            #     print(f"Training loss: {running_loss / len(dataloader)}")
+            else:
+                if verbose:
+                    print(f"Training loss: {running_loss / len(dataloader)}")
         return self.model
 
 

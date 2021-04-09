@@ -11,9 +11,9 @@ Dynamic programming workshop. Implement `policy iteration` and `value iteration`
 [FrozenLake](http://gym.openai.com/envs/FrozenLake-v0/) environment.
 
 ## [Workshop 2](./Workshop2)
-TD and DQN workshop. Implement `Q-learning, SARSA and DQN` to solve the [CartPole](https://gym.openai.com/envs/CartPole-v0/) 
-and [MountainCar](https://gym.openai.com/envs/MountainCar-v0/) environments.
+TD and DQN workshop. Implement `Q-learning, SARSA and DQN` to solve the 
+[CartPole](https://gym.openai.com/envs/CartPole-v0/) and 
+[MountainCar](https://gym.openai.com/envs/MountainCar-v0/) environments.
 
 ## [Workshop 3](./Workshop3)
-DRL on enterprise application workshop. Implement `DQN` to solve a
-price optimization problem.
+DRL on enterprise application workshop. Implement `DQN` to solve a price optimization problem.
