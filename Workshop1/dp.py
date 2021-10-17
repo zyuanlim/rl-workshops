@@ -145,9 +145,9 @@ def value_iteration(environment, discount_factor=1.0, theta=1e-9):
         for state in range(environment.nS):
 
             # Do a one-step lookahead to calculate state-action values
-            action_value = None
+            action_values = None
 
-            # Select best action to perform based on the highest state-action value
+            # Select the highest state-action value
             best_action_value = None
 
             # Calculate change in value
@@ -168,7 +168,7 @@ def value_iteration(environment, discount_factor=1.0, theta=1e-9):
     for state in range(environment.nS):
 
         # One step lookahead to find the best action for this state
-        action_value = None
+        action_values = None
 
         # Select best action based on the highest state-action value
         best_action = None
